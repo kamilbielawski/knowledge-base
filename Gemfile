@@ -11,6 +11,8 @@ gem 'uglifier', '>= 1.3.0'
 gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
+gem 'bower-rails'
+
 group :test, :development do
   gem "rspec"
   gem "rspec-rails", "~> 2.0"
