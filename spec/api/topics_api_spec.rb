@@ -14,7 +14,7 @@ describe 'Topics API' do
       2.times { create :topic }
       resp = api_get 'topics'
       expect(response.status).to eql(200)
-      expect(resp).to have(2).topics
+      expect(resp.count).to eql(2)
     end
   end
 
