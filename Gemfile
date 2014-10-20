@@ -13,6 +13,8 @@ gem 'spring',        group: :development
 
 gem 'bower-rails'
 
+gem 'addressable'
+
 group :test, :development do
   gem "rspec"
   gem "rspec-rails", "~> 2.0"
