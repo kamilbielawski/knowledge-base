@@ -44,4 +44,21 @@ describe Resource do
       expect(resource.errors[:topic]).to include "can't be blank"
     end
   end
+
+  describe 'tagging' do
+    it 'should be possible to add a tag to resource' do
+      resource = create :resource
+      tag = create :tag
+      expect{
+        resource.tags << tag
+      }.to change(resource.tags, :count).by(1)
+    end
+
+    it 'should not be possible to add the same tag twice' do
+      resource = create(:resource_with_tag)
+      expect{
+        resource.tags << resource.tags.last rescue nil
+      }.to change(resource.tags, :count).by(0)
+    end
+  end
 end

@@ -6,4 +6,6 @@ class Resource < ActiveRecord::Base
   validates :topic, presence: true
 
   belongs_to :topic
+  has_many :resources_tags
+  has_many :tags, through: :resources_tags
 end
