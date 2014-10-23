@@ -23,5 +23,15 @@ describe Tag do
       expect(tag.errors).to have_key :name
       expect(tag.errors[:name]).to include "is too short (minimum is 2 characters)"
     end
+
+    it 'should only allow aalphanumeric characters, _, -, + and # in tag name' do
+      forbidden_names = ['with space', 'abc***', '$$$']
+      forbidden_names.each do |name|
+        tag = build :tag, name: name
+        expect(tag.valid?).to be false
+        expect(tag.errors).to have_key :name
+        expect(tag.errors[:name]).to include "is invalid"
+      end
+    end
   end
 end
