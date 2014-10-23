@@ -67,4 +67,40 @@ describe 'Resources API' do
       end
     end
   end
+
+  # PUT /api/v1/resources/:id/add_tag?tag=:tag
+  describe :add_tag do
+    let(:tag_name) { "test" }
+    let(:resource) { create :resource }
+
+    it 'should return 404 error if resource doesn\'t exist' do
+      resp = api_put "resources/42/add_tag?tag=sample"
+      expect(response.status).to eql(404)
+      expect(resp['message']).to eql('Resource not found')
+    end
+
+    it 'should return 400 error if "tag" parameter is missing' do
+      resp = api_put "resources/#{resource.id}/add_tag"
+      expect(response.status).to eql(400)
+      expect(resp['message']).to eql("Missing parameter: 'tag'")
+    end
+
+    it 'should add tag to resource' do
+      tag = create :tag
+      expect{
+        resp = api_put "resources/#{resource.id}/add_tag?tag=#{tag.name}"
+      }.to change(resource.tags, :count).by(1)
+      expect(response.status).to eql(200)
+      expect(Tag.count).to eql(1)
+    end
+
+    it 'should create tag and add it to resource if it didn\'t exist' do
+      expect{
+        resp = api_put "resources/#{resource.id}/add_tag?tag=#{tag_name}"
+      }.to change(resource.tags, :count).by(1)
+      expect(response.status).to eql(200)
+      expect(resource.tags.last.name).to eq(tag_name)
+      expect(Tag.count).to eql(1)
+    end
+  end
 end

@@ -7,6 +7,12 @@ Rails.application.routes.draw do
           resources :resources, only: [:index, :create]
         end
       end
+
+      resources :resources, only: [] do
+        member do
+          put :add_tag
+        end
+      end
     end
   end
 
