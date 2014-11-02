@@ -3,7 +3,11 @@ module Api
     class TopicsController < ApiController
 
       def index
-        @topics = Topic.all
+        if params[:keywords]
+          @topics = Topic.where('name ilike ?', "%#{params[:keywords]}%")
+        else
+          @topics = []
+        end
         render 'index'
       end
 

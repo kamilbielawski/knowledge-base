@@ -12,6 +12,7 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 gem 'spring',        group: :development
 
 gem 'bower-rails'
+gem 'angular-rails-templates'
 
 gem 'addressable'
 
@@ -24,4 +25,6 @@ group :test, :development do
   gem "selenium-webdriver"
   gem "pry"
   gem 'simplecov', require: false
+  gem 'teaspoon'
+  gem 'phantomjs'
 end
