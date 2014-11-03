@@ -16,9 +16,14 @@ describe "TopicsController", ->
 
       httpBackend = $httpBackend
 
+      autocompleteRequest = new RegExp("\/topics.*all=true")
+
       if results
+        httpBackend.expectGET(request).respond(results)
         request = new RegExp("\/topics.*keywords=#{keywords}")
         httpBackend.expectGET(request).respond(results)
+      else
+        httpBackend.expectGET(request).respond([])
 
       ctrl = $controller('TopicsController',
                                 $scope: scope
@@ -33,7 +38,9 @@ describe "TopicsController", ->
 
   describe 'controller initialization', ->
     describe 'when no keywords present', ->
-      beforeEach(setupController())
+      beforeEach ->
+        setupController()
+        httpBackend.flush()
 
       it 'defaults to no topics', ->
         expect(scope.topics).toEqualData([])
@@ -60,6 +67,7 @@ describe "TopicsController", ->
     describe 'search()', ->
       beforeEach ->
         setupController()
+        httpBackend.flush()
 
       it 'redirects to itself with a keyword param', ->
         keywords = 'ruby'

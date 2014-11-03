@@ -4,6 +4,8 @@ angular.module('controllers').
      $scope.search = (keywords)->  $location.path("/").search('keywords',keywords)
      Topic = $resource('/api/v1/topics/:topicId', { topicId: "@id", format: 'json' })
 
+     Topic.query(all: true, (results) -> $scope.allTopics = results)
+
      if $routeParams.keywords
        Topic.query(keywords: $routeParams.keywords, (results)-> $scope.topics = results)
      else

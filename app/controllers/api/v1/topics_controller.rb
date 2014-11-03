@@ -5,6 +5,8 @@ module Api
       def index
         if params[:keywords]
           @topics = Topic.where('name ilike ?', "%#{params[:keywords]}%")
+        elsif params[:all]
+          @topics = Topic.all
         else
           @topics = []
         end

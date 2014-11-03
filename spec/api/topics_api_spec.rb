@@ -10,6 +10,13 @@ describe 'Topics API' do
       expect(resp).to eql([])
     end
 
+    it 'should return array of all topics when all parameter provided' do
+      2.times { create :topic }
+      resp = api_get 'topics', all: true
+      expect(response.status).to eql(200)
+      expect(resp.count).to eql(2)
+    end
+
     it 'should return empty array if no topic mathces search string' do
       2.times { create :topic }
       resp = api_get 'topics', keywords: 'ruby'
