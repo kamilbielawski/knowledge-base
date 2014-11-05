@@ -13,6 +13,15 @@ module Api
         render 'index'
       end
 
+      def show
+        @topic = Topic.find_by_id(params[:id])
+        if @topic
+          render '_show'
+        else
+          render json: {message: 'Resource not found'}, status: 404
+        end
+      end
+
       def destroy
         @topic = Topic.find_by_id(params[:id])
         if @topic

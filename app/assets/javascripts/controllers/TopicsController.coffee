@@ -1,13 +1,10 @@
 angular.module('controllers').
   controller('TopicsController', ['$scope', '$routeParams', '$location', '$resource',
   ($scope, $routeParams, $location, $resource)->
-     $scope.search = (keywords)->  $location.path("/").search('keywords',keywords)
-     Topic = $resource('/api/v1/topics/:topicId', { topicId: "@id", format: 'json' })
+    Topic = $resource('/api/v1/topics/:topicId', { topicId: "@id", format: 'json' })
+    Topic.query(all: true, (results) -> $scope.allTopics = results)
 
-     Topic.query(all: true, (results) -> $scope.allTopics = results)
-
-     if $routeParams.keywords
-       Topic.query(keywords: $routeParams.keywords, (results)-> $scope.topics = results)
-     else
-       $scope.topics = []
-])
+    $scope.search = (keywords)->
+      topicId = ($scope.allTopics.filter (t)-> t.name == keywords)[0].id
+      $location.path("/topic/#{topicId}/resources")
+  ])

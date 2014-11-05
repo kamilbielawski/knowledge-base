@@ -69,7 +69,7 @@ describe "TopicsController", ->
         setupController()
         httpBackend.flush()
 
-      it 'redirects to itself with a keyword param', ->
+      it 'redirects to resources list with a keyword param', ->
         keywords = 'ruby'
         scope.search(keywords)
         expect(location.path()).toBe('/')
