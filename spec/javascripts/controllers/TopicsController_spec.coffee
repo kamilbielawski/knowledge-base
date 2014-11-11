@@ -5,29 +5,29 @@ describe "TopicsController", ->
   routeParams  = null
   resource     = null
   httpBackend  = null
+  autocompleteResults = null
 
-  setupController = (keywords, results)->
+  setupController = (options = {})->
     inject(($location, $routeParams, $rootScope, $resource, $httpBackend, $controller)->
       scope       = $rootScope.$new()
       location    = $location
       resource    = $resource
       routeParams = $routeParams
-      routeParams.keywords = keywords
-
+      routeParams.keywords = options.keywords
       httpBackend = $httpBackend
-
-      autocompleteRequest = new RegExp("\/topics.*all=true")
-
-      if results
-        httpBackend.expectGET(request).respond(results)
-        request = new RegExp("\/topics.*keywords=#{keywords}")
-        httpBackend.expectGET(request).respond(results)
-      else
-        httpBackend.expectGET(request).respond([])
-
       ctrl = $controller('TopicsController',
                                 $scope: scope
                                 $location: location)
+
+      autocompleteResults = options.autocompleteResults || [
+        {id: 1, name: 'Ruby'},
+        {id: 2, name: 'Ruby on Rails'},
+        {id: 3, name: 'JavaScript'},
+        {id: 4, name: 'AngularJS'},
+        {id: 5, name: 'CSS'}
+      ]
+      autocompleteRequest = new RegExp("\/topics.*all=true")
+      httpBackend.expectGET(autocompleteRequest).respond(autocompleteResults)
     )
 
   beforeEach(module("app"))
@@ -42,27 +42,8 @@ describe "TopicsController", ->
         setupController()
         httpBackend.flush()
 
-      it 'defaults to no topics', ->
-        expect(scope.topics).toEqualData([])
-
-    describe 'with keywords', ->
-      keywords = 'ruby'
-      topics = [
-        {
-          id: 1
-          name: 'Ruby'
-        },
-        {
-          id: 3
-          name: 'Ruby on Rails'
-        }
-      ]
-      beforeEach ->
-        setupController(keywords, topics)
-        httpBackend.flush()
-
-      it 'calls the back-end', ->
-        expect(scope.topics).toEqualData(topics)
+      it 'loads list of all topics for autocomplete', ->
+        expect(scope.allTopics).toEqualData(autocompleteResults)
 
     describe 'search()', ->
       beforeEach ->
@@ -70,8 +51,7 @@ describe "TopicsController", ->
         httpBackend.flush()
 
       it 'redirects to resources list with a keyword param', ->
-        keywords = 'ruby'
+        keywords = 'Ruby'
         scope.search(keywords)
-        expect(location.path()).toBe('/')
-        expect(location.search()).toEqualData({keywords: keywords})
+        expect(location.path()).toBe('/topic/1/resources')
 

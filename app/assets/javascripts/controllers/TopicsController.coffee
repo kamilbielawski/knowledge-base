@@ -1,6 +1,7 @@
 angular.module('controllers').
   controller('TopicsController', ['$scope', '$routeParams', '$location', '$resource',
   ($scope, $routeParams, $location, $resource)->
+    $scope.allTopics = []
     Topic = $resource('/api/v1/topics/:topicId', { topicId: "@id", format: 'json' })
     Topic.query(all: true, (results) -> $scope.allTopics = results)
 
