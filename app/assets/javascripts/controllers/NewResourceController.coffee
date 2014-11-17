@@ -1,10 +1,17 @@
 angular.module('controllers').
-  controller('NewResourceController', ['$scope', '$routeParams', '$resource', 'Resource'
-  ($scope, $routeParams, $resource, Resource)->
-    this.resource = {topicId: $routeParams.topicId}
+  controller('NewResourceController', ['$scope', '$routeParams',
+    '$resource', 'Resource', '$modalInstance', 'resources',
+  ($scope, $routeParams, $resource, Resource, $modalInstance, resources)->
+    $scope.resource = {topicId: $routeParams.topicId}
 
-    this.add = ()->
-      Resource.save(resource: this.resource, ->
-        console.log 'saved'
+    $scope.add = ->
+      $modalInstance.close()
+      Resource.save(resource: this.resource, =>
+        $scope.resource.created_at = new Date()
+        $scope.resource.updated_at = new Date()
+        resources.push($scope.resource)
       )
+
+    $scope.cancel = ->
+      $modalInstance.dismiss('cancel')
   ])
