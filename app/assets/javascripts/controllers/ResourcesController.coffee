@@ -13,4 +13,10 @@ angular.module('controllers').
         controller: 'NewResourceController'
         resolve:
           resources: => $scope.resources
+
+    $scope.voteUp  = (resource)->
+      resource.rating++
+
+    $scope.voteDown  = (resource)->
+      resource.rating--
   ])

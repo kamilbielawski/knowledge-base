@@ -16,3 +16,19 @@
 
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap-sprockets";
 @import "bootstrap-sass-official/assets/stylesheets/bootstrap";
+
+.resource {
+  header {
+    margin-bottom: 12px;
+  }
+  h1 {
+    margin: 0;
+  }
+  h2 {
+    font-size: 20px;
+    margin: 0;
+  }
+  .vote {
+    cursor: pointer;
+  }
+}

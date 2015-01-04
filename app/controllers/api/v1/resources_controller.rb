@@ -42,7 +42,7 @@ module Api
       end
 
       def resource_params
-        params.require(:resource).permit(:name, :description, :url)
+        params.require(:resource).permit(:name, :description, :url, :rating)
       end
     end
   end
