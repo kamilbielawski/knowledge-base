@@ -23,10 +23,10 @@ describe "ResourcesController", ->
       httpBackend.expectGET(topicRequest).respond({id: 1, name: 'Ruby'})
 
       resourcesResponse = options.resourcesResponse || [
-        {id: 1, name: 'Ruby-Doc'},
-        {id: 2, name: 'Ruby Koans'},
-        {id: 4, name: 'Ruby Tapas'},
-        {id: 8, name: 'Learn Ruby the Hard Way'}
+        {id: 1, name: 'Ruby-Doc', rating: 10},
+        {id: 2, name: 'Ruby Koans', rating: 8},
+        {id: 4, name: 'Ruby Tapas', rating: 6},
+        {id: 8, name: 'Learn Ruby the Hard Way', rating: 7}
       ]
       resourcesRequest = new RegExp("\/topics\/#{routeParams.topicId}\/resources")
       httpBackend.expectGET(resourcesRequest).respond(resourcesResponse)
@@ -47,6 +47,3 @@ describe "ResourcesController", ->
 
     it 'loads all resources for the requested topic', ->
       expect(scope.resources).toEqualData(resourcesResponse)
-
-
-

@@ -43,6 +43,20 @@ describe Resource do
       expect(resource.errors).to have_key :topic
       expect(resource.errors[:topic]).to include "can't be blank"
     end
+
+    it 'should validate numericality of rating' do
+      resource = build :resource, rating: 'abc'
+      expect(resource.valid?).to be false
+      expect(resource.errors).to have_key :rating
+      expect(resource.errors[:rating]).to include "is not a number"
+    end
+
+    it 'should require rating to be integer' do
+      resource = build :resource, rating: 0.5
+      expect(resource.valid?).to be false
+      expect(resource.errors).to have_key :rating
+      expect(resource.errors[:rating]).to include "must be an integer"
+    end
   end
 
   describe 'tagging' do

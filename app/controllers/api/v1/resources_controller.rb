@@ -5,7 +5,7 @@ module Api
       before_action :find_resource, only: [:add_tag]
 
       def index
-        @resources = @topic.resources.order(updated_at: :desc)
+        @resources = @topic.resources.order(rating: :desc, updated_at: :desc)
         render 'index'
       end
 
