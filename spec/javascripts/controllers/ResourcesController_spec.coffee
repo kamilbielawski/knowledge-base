@@ -47,3 +47,26 @@ describe "ResourcesController", ->
 
     it 'loads all resources for the requested topic', ->
       expect(scope.resources).toEqualData(resourcesResponse)
+
+  describe 'voting', ->
+    beforeEach ->
+      topicId = 1
+      setupController({topicId: topicId})
+      httpBackend.flush()
+      location.path("/topic/#{topicId}/resources")
+
+    it 'increases rating by 1 when voting up', ->
+      votingRequest = new RegExp("resources\/#{scope.resources[0].id}\/vote_up")
+      httpBackend.expectPUT(votingRequest).respond({status: 'ok'})
+      oldRating = scope.resources[0].rating
+      scope.voteUp(scope.resources[0])
+      httpBackend.flush()
+      expect(scope.resources[0].rating).toEqual(oldRating+1)
+
+    it 'decreases rating by 1 when voting down', ->
+      votingRequest = new RegExp("resources\/#{scope.resources[2].id}\/vote_down")
+      httpBackend.expectPUT(votingRequest).respond({status: 'ok'})
+      oldRating = scope.resources[2].rating
+      scope.voteDown(scope.resources[2])
+      httpBackend.flush()
+      expect(scope.resources[2].rating).toEqual(oldRating-1)

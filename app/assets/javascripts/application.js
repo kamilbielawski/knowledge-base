@@ -16,4 +16,5 @@
 //= require angular-rails-templates
 //= require angular-resource/angular-resource
 //= require angular-bootstrap/ui-bootstrap-tpls.min
+//= require angular-local-storage/dist/angular-local-storage.min
 //= require_tree .

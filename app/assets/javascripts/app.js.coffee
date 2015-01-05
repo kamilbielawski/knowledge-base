@@ -1,4 +1,4 @@
-app = angular.module('app', ['templates', 'ngRoute', 'ngResource', 'ui.bootstrap', 'controllers', 'services'])
+app = angular.module('app', ['templates', 'ngRoute', 'ngResource', 'ui.bootstrap', 'LocalStorageModule', 'controllers', 'services'])
 
 app.config([ '$routeProvider',
    ($routeProvider)->

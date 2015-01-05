@@ -2,7 +2,7 @@ module Api
   module V1
     class ResourcesController < ApiController
       before_action :find_topic, only: [:index, :create]
-      before_action :find_resource, only: [:add_tag]
+      before_action :find_resource, only: [:add_tag, :vote_up, :vote_down]
 
       def index
         @resources = @topic.resources.order(rating: :desc, updated_at: :desc)
@@ -21,6 +21,14 @@ module Api
         else
           render json: {message: "Missing parameter: 'tag'"}, status: 400
         end
+      end
+
+      def vote_up
+        @resource.increment!(:rating)
+      end
+
+      def vote_down
+        @resource.decrement!(:rating)
       end
 
       private

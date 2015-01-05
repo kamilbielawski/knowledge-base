@@ -7,5 +7,11 @@ angular.module('services').factory('Resource', ['$resource',
     },{
       update:
         method: 'PUT'
+      vote_up:
+        method: 'PUT'
+        url: '/api/v1/resources/:resourceId/vote_up'
+      vote_down:
+        method: 'PUT'
+        url: '/api/v1/resources/:resourceId/vote_down'
     })
 ])

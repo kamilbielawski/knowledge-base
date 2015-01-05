@@ -4,7 +4,7 @@
 
 <section class="row resource" ng-if="resources">
   <ul class="list-unstyled">
-    <li ng-repeat="res in resources">
+    <li ng-repeat="res in resources | orderBy:'rating':true">
       <section class="well col-md-6 col-md-offset-3">
           <header>
             <h1><a href="#">{{res.name}}</a></h1>

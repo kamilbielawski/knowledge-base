@@ -103,4 +103,40 @@ describe 'Resources API' do
       expect(Tag.count).to eql(1)
     end
   end
+
+  # PUT /api/v1/resources/:id/vote_up
+  describe :vote_up do
+    let!(:resource) { create :resource }
+
+    it 'should return 404 error if resource doesn\'t exist' do
+      resp = api_put "resources/42/vote_up"
+      expect(response.status).to eql(404)
+      expect(resp['message']).to eql('Resource not found')
+    end
+
+    it 'should increase rating by 1' do
+      expect {
+        resp = api_put "resources/#{resource.id}/vote_up"
+      }.to change{resource.reload.rating}.by(1)
+      expect(response.status).to eql(200)
+    end
+  end
+
+  # PUT /api/v1/resources/:id/vote_down
+  describe :vote_up do
+    let!(:resource) { create :resource }
+
+    it 'should return 404 error if resource doesn\'t exist' do
+      resp = api_put "resources/42/vote_down"
+      expect(response.status).to eql(404)
+      expect(resp['message']).to eql('Resource not found')
+    end
+
+    it 'should increase rating by 1' do
+      expect {
+        resp = api_put "resources/#{resource.id}/vote_down"
+      }.to change{resource.reload.rating}.by(-1)
+      expect(response.status).to eql(200)
+    end
+  end
 end

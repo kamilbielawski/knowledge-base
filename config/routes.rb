@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       resources :resources, only: [] do
         member do
           put :add_tag
+          put :vote_up
+          put :vote_down
         end
       end
     end

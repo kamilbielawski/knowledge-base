@@ -9,6 +9,7 @@ angular.module('controllers').
       Resource.save(resource: this.resource, =>
         $scope.resource.created_at = new Date()
         $scope.resource.updated_at = new Date()
+        $scope.resource.rating = 0
         resources.push($scope.resource)
       )
 
