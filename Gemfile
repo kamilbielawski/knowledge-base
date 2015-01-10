@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 
-gem 'rails', '4.1.5'
+gem 'rails', '4.2.0'
 gem 'rails-api', '~> 0.3.0'
 gem 'jbuilder', '~> 2.0'
 gem 'pg'
